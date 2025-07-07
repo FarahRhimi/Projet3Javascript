@@ -7,17 +7,45 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+/>
+
 </head>
 <body>
+	<!-- Overlay -->
+<div id="modal-overlay" class="hidden">
+	<!-- Modale -->
+	<div id="modal" class="modal">
+	  <span class="close-modal">&times;</span>
+	  <div id="modal-gallery-container" class="modal-gallery-grid"></div>
+
+	  
+	  <!-- Vue Galerie -->
+	  <div id="modal-gallery-view">
+		<h2>Galerie photo</h2>
+		<button id="open-add-photo">Ajouter une photo</button>
+		<!-- Galerie d’images ici -->
+	  </div>
+  
+	  <!-- Vue Ajout Photo (masquée au début) -->
+	  <div id="modal-add-view" class="hidden">
+		<h2>Ajout photo</h2>
+		<button id="back-to-gallery">Retour</button>
+		<!-- Formulaire d’ajout ici -->
+	  </div>
+	</div>
+  </div>
+  
 <header>
 	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 	<nav>
 		<ul>
 			<li>projets</li>
 			<li>contact</li>
-			<li>login</li>
+			<li id="login"><a href="login.html">login</a></li>
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 		</ul>
 	</nav>
@@ -35,19 +63,19 @@
 		</article>
 	</section>
 	<section id="portfolio">
-		<h2>Mes Projets</h2>
+		<h2>Mes Projets<span id="modifier"><i class="fa-regular fa-pen-to-square"></i>modifier</span></h2> 
 
-	
-	<ul id="categories-menu">
-	</ul>
 
+		<div id="categories-menu" class="boutons-filtres-container"></div>
 
 		<div class="gallery">
 			 <!-- Suppression des éléments HTML -->
 		</div>
+
 	</section>
 	<section id="contact">
 		<h2>Contact</h2>
+		
 		<p>Vous avez un projet ? Discutons-en !</p>
 		<form action="#" method="post">
 			<label for="name">Nom</label>
@@ -61,6 +89,7 @@
 	</section>
 </main>
 
+
 <footer>
 	<nav>
 		<ul>
@@ -69,5 +98,14 @@
 	</nav>
 </footer>
 <script src="./scripts/script.js" defer></script>
+
+
+
+  <div id="admin-bar">
+	<p><i class="fa-regular fa-pen-to-square"></i> Mode édition</p>
+  </div>
+
 </body>
+
+
 </html>

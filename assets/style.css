@@ -3,34 +3,25 @@
    License: none (public domain)
 */
 
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font-size: 100%;
-	font: inherit;
-	vertical-align: baseline;
+* {margin: 0px;
+padding: 0px;
 }
+
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
+
 body {
 	line-height: 1;
 }
+
+html, body {
+	height: 100%;
+	width: 100%;
+  }
+  
 ol, ul {
 	list-style: none;
 }
@@ -52,6 +43,7 @@ body {
 	margin:auto;
 	font-family: 'Work Sans' ;
 	font-size: 14px;
+	    background-color: #FFFEF8;
 }
 header {
 	display: flex;
@@ -126,6 +118,33 @@ li:hover {
 	text-align: center;
 	margin-bottom: 1em;
 }
+
+.boutons-filtres-container {
+	display: flex;
+	justify-content: center;
+	gap: 15px;
+	flex-wrap: wrap;
+	margin: 20px 0;
+  }
+  
+  .boutons-filtres {
+	padding: 10px 20px;
+	border-radius: 25px;
+	border: 2px solid #1D6154;
+	background-color: transparent;
+	color: #1D6154;
+	font-family: 'Syne', sans-serif;
+	font-weight: 700;
+	font-size: 16px;
+  }
+  
+  .boutons-filtres.active,
+  .boutons-filtres:hover {
+	background-color: #1D6154;
+	color: white;
+  }
+  
+
 .gallery {
 	width: 100%;
 	display: grid;
@@ -186,4 +205,168 @@ footer nav ul {
 	justify-content: flex-end;
 	margin: 2em
 }
+
+/* Fond semi-transparent derrière la modale */
+.modal-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background-color: rgba(0, 0, 0, 0.4);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 1000;
+  }
+  
+  /* Cache par défaut */
+  .hidden {
+	display: none;
+  }
+  
+  /* Conteneur de la modale */
+  .modal {
+	background-color: #fff;
+	border-radius: 10px;
+	padding: 30px;
+	width: 500px;
+	max-width: 90%;
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+	font-family: 'Work Sans', sans-serif;
+	position: relative;
+  }
+  
+  /* Bouton de fermeture (croix) */
+  .close-modal {
+	position: absolute;
+	top: 15px;
+	right: 20px;
+	font-size: 20px;
+	color: #333;
+	cursor: pointer;
+  }
+  
+  /* Titre modale */
+  .modal h2 {
+	font-size: 22px;
+	color: black;
+	margin-bottom: 20px;
+	text-align: center;
+  }
+  
+  /* Bouton "Ajouter une photo" ou autre */
+  .modal button {
+	background-color: #1D6154;
+	font-family: 'Work Sans' ;
+	color: white;
+	border: none;
+	border-radius: 60px;
+	padding: 10px 20px;
+	cursor: pointer;
+	font-size: 16px;
+	margin-top: 20px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+  }
+  .modal-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.modal-gallery-grid figure {
+  position: relative;
+  margin: 0;
+}
+
+.modal-gallery-grid img {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+.delete-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: black;
+  color: white;
+  padding: 4px;
+  border-radius: 50%;
+  font-size: 12px;
+  cursor: pointer;
+}
+.modal-gallery-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+	gap: 10px;
+	margin: 20px 0;
+  }
+  
+  .modal-gallery-grid figure {
+	position: relative;
+	margin: 0;
+  }
+  
+  .modal-gallery-grid img {
+	width: 100%;
+	height: auto;
+	border-radius: 4px;
+  }
+  
+  .delete-icon {
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	background: black;
+	color: white;
+	padding: 4px;
+	border-radius: 50%;
+	font-size: 12px;
+	cursor: pointer;
+  }
+  
+  /* Optionnel : grille pour afficher les images dans la modale */
+  #gallery-images {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+	gap: 15px;
+	margin-top: 20px;
+  }
+
+  #admin-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1100; /* plus grand que la modale */
+  background-color: black;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+  font-family: 'Work Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  display: none;
+}
+
+  
+  #admin-bar i {
+	margin-right: 8px;
+  }
+
+  #modifier {
+	display: none;
+	color:#333;
+	font-size: 10px;
+	padding: 15px;
+  }
+
+  #modifier i {
+	padding: 5px;
+  }
+	
 
