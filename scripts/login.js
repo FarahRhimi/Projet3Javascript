@@ -1,13 +1,11 @@
-console.log("bonjour");
+
 
 document.addEventListener("submit", async (event) => {
   event.preventDefault();
-  console.log("Il n’y a pas eu de rechargement de page");
 
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
-  console.log(email);
-  console.log(password);
+
 
   const errorMessage = document.getElementById("error-message");
 
@@ -30,8 +28,6 @@ document.addEventListener("submit", async (event) => {
     }
 
     const data = await response.json();
-    console.log("Réponse serveur :", data);
-    console.log("Token :", data.token);
 
     // Stockage du token
     window.sessionStorage.setItem("token", data.token);

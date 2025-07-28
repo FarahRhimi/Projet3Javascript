@@ -45,13 +45,16 @@ async function getcategories() {
   }
 
   createButton("Tous", 0);
+  const option = document.createElement("option");
+    option.value = 0;
+    option.textContent = "";
+    categorySelect.appendChild(option);
   categories.forEach((category) => {
-    createButton(category.name, category.id);
-
     const option = document.createElement("option");
     option.value = category.id;
     option.textContent = category.name;
     categorySelect.appendChild(option);
+    //createButton(category.name, category.id);//
   });
 }
 
@@ -134,20 +137,24 @@ function setupAddPhotoForm() {
 
   const previewImg = document.createElement('img');
   previewImg.style.maxWidth = "100%";
-  previewImg.style.marginTop = "10px";
+  previewImg.style.marginTop = "0px";
   previewImg.style.display = "none";
   iconImageContainer.appendChild(previewImg);
 
   fileInput.addEventListener("change", () => {
     const file = fileInput.files[0];
-    console.log (file)
     if ((file.name).length !=2) {
       const reader = new FileReader();
       reader.onload = (e) => {
         previewImg.src = e.target.result;
         previewImg.style.display = "block";
       };
+      formatimg = document.querySelector ('.formatimg')
+      iconimage = document.querySelector ('.fa-image')
+      iconimage.style.display="none";
+      formatimg.style.display="none";
       addPhotoLabel.style.display = "none";
+      console.log (addPhotoLabel)
       reader.readAsDataURL(file);
     } else {
       previewImg.style.display = "none";
