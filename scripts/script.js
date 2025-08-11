@@ -1,90 +1,102 @@
-console.log("bonjour");
 
-// Récupération et affichage des travaux dans la galerie principale
+// Récup et affichage des travaux dans la galerie principale // 
 async function getworks() {
-  const reponse = await fetch("http://localhost:5678/api/works");
-  const projets = await reponse.json();
-  let gallery = document.getElementsByClassName("gallery")[0];
-  gallery.innerHTML = "";
+  const reponse = await fetch("http://localhost:5678/api/works"); // Récupère les projets depuis l'API //
+  const projets = await reponse.json(); // Convertit la réponse en JSON (liste de projets) //
+  let gallery = document.getElementsByClassName("gallery")[0]; // Sélectionne le conteneur HTML de la galerie //
+  gallery.innerHTML = ""; // Vide le contenu actuel de la galerie //
 
+  // Parcours tous les projets un par un
   for (let compteur = 0; compteur < projets.length; compteur++) {
-    const figureElement = document.createElement("figure");
-    const figcaptionElement = document.createElement("figcaption");
-    figcaptionElement.textContent = projets[compteur].title;
-    const imgElement = document.createElement("img");
-    imgElement.src = projets[compteur].imageUrl;
+    const figureElement = document.createElement("figure"); // Crée un conteneur figure pour chaque projet //
+    const figcaptionElement = document.createElement("figcaption"); // Crée l’élément texte (titre du projet) //
+    figcaptionElement.textContent = projets[compteur].title; // Affecte le titre du projet //
+    const imgElement = document.createElement("img"); // Crée l’image //
+    imgElement.src = projets[compteur].imageUrl; // Source de l’image depuis l’API //
 
-    figureElement.appendChild(imgElement);
-    figureElement.appendChild(figcaptionElement);
-    figureElement.setAttribute("data-categoryid", projets[compteur].categoryId);
-
-    gallery.appendChild(figureElement);
+    figureElement.appendChild(imgElement); // Ajoute l’image à figure //
+    figureElement.appendChild(figcaptionElement); // Ajoute le titre à figure //
+    figureElement.setAttribute("data-categoryid", projets[compteur].categoryId); // Attribut personnalisé pour le filtre //
+    gallery.appendChild(figureElement); // Ajoute la figure à la galerie //
   }
 }
 
-// Récupération et affichage des catégories
+
+// Récup et affichage des catégories depuis l'API //
 async function getcategories() {
-  const reponse = await fetch("http://localhost:5678/api/categories");
-  const categories = await reponse.json();
-  const categoriesMenu = document.getElementById("categories-menu");
-  const categorySelect = document.getElementById("category");
+  const reponse = await fetch("http://localhost:5678/api/categories"); // Appel à l’API pour les catégories //
+  const categories = await reponse.json(); // Transformation de la réponse en tableau //
+  const categoriesMenu = document.getElementById("categories-menu"); // Conteneur HTML des boutons de filtre //
+  const categorySelect = document.getElementById("category"); // Liste déroulante du formulaire ajout photo //
 
-  categoriesMenu.innerHTML = "";
-  categorySelect.innerHTML = "";
+  categoriesMenu.innerHTML = ""; // On vide d’abord l’ancien contenu //
+  categorySelect.innerHTML = ""; // On vide le <select> aussi //
 
+  // Fonction pour créer un bouton de filtre //
   function createButton(name, id) {
-    const button = document.createElement("button");
-    button.textContent = name;
-    button.classList.add("boutons-filtres");
-    button.setAttribute("data-category-id", id);
+    const button = document.createElement("button"); // Crée un bouton //
+    button.textContent = name; // Texte du bouton //
+    button.classList.add("boutons-filtres"); // Classe CSS pour styliser //
+    button.setAttribute("data-category-id", id); // Attribut pour savoir à quelle catégorie il correspond //
+
+    // Événement clic : filtre la galerie et met le bouton actif //
     button.addEventListener("click", () => {
       setActiveButton(button);
       filterGalleryByCategory(id);
     });
-    categoriesMenu.appendChild(button);
+
+    categoriesMenu.appendChild(button); // Ajoute le bouton au menu HTML //
   }
 
+  // Création du bouton "Tous" //
   createButton("Tous", 0);
+
+  // Ajoute une option vide au <select> (pour forcer l'utilisateur à choisir) //
   const option = document.createElement("option");
-    option.value = 0;
-    option.textContent = "";
-    categorySelect.appendChild(option);
+  option.value = 0;
+  option.textContent = "";
+  categorySelect.appendChild(option);
+
+  // Création des boutons et options <select> pour chaque catégorie //
   categories.forEach((category) => {
     const option = document.createElement("option");
     option.value = category.id;
     option.textContent = category.name;
     categorySelect.appendChild(option);
-    //createButton(category.name, category.id);//
+
+    createButton(category.name, category.id);
   });
 }
 
+// Met en surbrillance le bouton actif //
 function setActiveButton(activeBtn) {
   document.querySelectorAll(".boutons-filtres").forEach((btn) => {
-    btn.classList.remove("active");
+    btn.classList.remove("active"); // Supprime la classe active sur tous les boutons //
   });
-  activeBtn.classList.add("active");
+  activeBtn.classList.add("active"); // Ajoute la classe active sur le bouton cliqué //
 }
 
+
+// Affiche uniquement les projets correspondant à la catégorie sélectionnée //
 function filterGalleryByCategory(categoryId) {
-  const figures = document.querySelectorAll(".gallery figure");
+  const figures = document.querySelectorAll(".gallery figure"); // Sélectionne tous les projets //
   figures.forEach((figure) => {
-    const id = parseInt(figure.getAttribute("data-categoryid"));
+    const id = parseInt(figure.getAttribute("data-categoryid")); // Récupère la catégorie de chaque projet //
+    // Si "Tous" est sélectionné (0) ou si la catégorie correspond, on l’affiche. Sinon, on le cache //
     figure.style.display = categoryId === 0 || id === categoryId ? "block" : "none";
   });
 }
 
-// Galerie modale
+// Affichage de la galerie dans la modale (admin) //
 async function displayModalGallery() {
   try {
     const response = await fetch("http://localhost:5678/api/works");
     const works = await response.json();
-
     const container = document.getElementById("modal-gallery-container");
     container.innerHTML = "";
 
     works.forEach((work) => {
       const figure = document.createElement("figure");
-
       const img = document.createElement("img");
       img.src = work.imageUrl;
       img.alt = work.title;
@@ -92,8 +104,9 @@ async function displayModalGallery() {
       const deleteBtn = document.createElement("span");
       deleteBtn.classList.add("delete-icon");
       deleteBtn.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
+
       deleteBtn.addEventListener("click", () => {
-        deleteWork(work.id);
+        deleteWork(work.id); // Suppression du projet au clic sur la corbeille //
       });
 
       figure.appendChild(img);
@@ -105,9 +118,9 @@ async function displayModalGallery() {
   }
 }
 
-// Suppression
+// Suppression d’un projet depuis la modale //
 async function deleteWork(id) {
-  const token = sessionStorage.getItem("token");
+  const token = sessionStorage.getItem("token"); // Récupération du token de session //
   const response = await fetch(`http://localhost:5678/api/works/${id}`, {
     method: "DELETE",
     headers: {
@@ -116,15 +129,14 @@ async function deleteWork(id) {
   });
 
   if (response.ok) {
-    console.log(`Suppression de l'œuvre ${id}`);
-    displayModalGallery();
-    getworks();
+    displayModalGallery(); // Mise à jour de la galerie modale //
+    getworks(); // Mise à jour de la galerie principale //
   } else {
-    alert("Échec de la suppression");
+    alert("Échec de la suppression"); // Message d’erreur //
   }
 }
 
-// Formulaire ajout photo avec prévisualisation
+// Gestion du formulaire d’ajout de photo avec prévisualisation //
 function setupAddPhotoForm() {
   const form = document.getElementById("add-photo-form");
   const fileInput = document.getElementById("image");
@@ -141,6 +153,7 @@ function setupAddPhotoForm() {
   previewImg.style.display = "none";
   iconImageContainer.appendChild(previewImg);
 
+  // Affiche la prévisualisation quand une image est choisie //
   fileInput.addEventListener("change", () => {
     const file = fileInput.files[0];
     if ((file.name).length !=2) {
@@ -154,7 +167,6 @@ function setupAddPhotoForm() {
       iconimage.style.display="none";
       formatimg.style.display="none";
       addPhotoLabel.style.display = "none";
-      console.log (addPhotoLabel)
       reader.readAsDataURL(file);
     } else {
       previewImg.style.display = "none";
@@ -163,6 +175,7 @@ function setupAddPhotoForm() {
     checkFormValidity();
   });
 
+  // Mise à jour de l’état du bouton "Valider" //
   titleInput.addEventListener("input", checkFormValidity);
   categorySelect.addEventListener("change", checkFormValidity);
 
@@ -180,6 +193,7 @@ function setupAddPhotoForm() {
     }
   }
 
+  // Soumission du formulaire //
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
@@ -225,7 +239,8 @@ function setupAddPhotoForm() {
   });
 }
 
-// DOM Ready
+
+// Initialisation du script quand la page est prête //
 document.addEventListener("DOMContentLoaded", () => {
   const modalOverlay = document.getElementById("modal-overlay");
   const modifier = document.getElementById("modifier");
@@ -240,6 +255,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const adminbar = document.getElementById("admin-bar");
   const categories_menu = document.getElementById("categories-menu");
 
+  // Si utilisateur connecté, activer mode admin //
   if (token) {
     adminbar.style.display = "block";
     login.textContent = "logout";
@@ -255,6 +271,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // Gestion des boutons d'ouverture et fermeture de la modale //
   modifier.addEventListener("click", () => {
     modalOverlay.classList.remove("hidden");
     modalOverlay.classList.add("modal-overlay");
@@ -285,8 +302,10 @@ document.addEventListener("DOMContentLoaded", () => {
     modalGalleryView.classList.remove("hidden");
   });
 
-  setupAddPhotoForm();
+  setupAddPhotoForm(); // Initialise la logique du formulaire //
 });
 
-getworks();
-getcategories();
+
+// Chargement initial de la galerie et des catégories // 
+getworks();      // Charge les projets au démarrage //
+getcategories(); // Charge les catégories au démarrage //
