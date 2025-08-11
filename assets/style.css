@@ -320,11 +320,12 @@
 		font-family: 'Work Sans' ;
 		color: white;
 		border: none;
+		width: 237px;
 		border-radius: 60px;
 		padding: 10px 20px;
 		cursor: pointer;
 		font-size: 16px;
-		margin-top: 36px;
+		margin-top: 25px;
 		display: block;
 		margin-left: auto;
 		margin-right: auto;
@@ -415,6 +416,13 @@
 		border: solid 1px;
 		color: #B3B3B3;
 	  }
+
+	  #ligne2 {
+		width: 100%;
+		margin-top: 43px;
+		border: solid 1px;
+		color: #B3B3B3;
+	  }
 	  
 	  /* Zone d'upload (label qui remplace input file) */
 	  #add-photo-form label[for="image"] {
@@ -453,6 +461,7 @@
 	  /* Bouton valider désactivé */
 	  #submit-photo {
 		background-color: gray;
+		width: 237px;
 		color: white;
 		padding: 10px;
 		border-radius: 20px;
