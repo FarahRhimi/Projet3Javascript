@@ -1,0 +1,84 @@
+
+
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  background-color: #FFFEF8;
+}
+
+#login-section {
+  background-color: white;
+  max-width: 400px;
+  width: 100%;
+  padding: 40px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+  border-radius: 12px;
+}
+
+#login-section h2 {
+  font-family: 'Syne', serif;
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  text-align: center;
+  color: #1D6154;
+  margin-bottom: 30px;
+}
+
+.formulaire-de-login label {
+  display: block;
+  margin: 20px 0 8px;
+  font-weight: 600;
+  color: #444;
+}
+
+.formulaire-de-login input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+}
+
+.formulaire-de-login input:focus {
+  outline: none;
+  border-color: #1D6154;
+}
+
+.formulaire-de-login button {
+  width: 100%;
+  margin-top: 30px;
+  padding: 14px;
+  background-color: #1D6154;
+  color: white;
+  border: none;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+
+.formulaire-de-login button:hover {
+  background-color: #15503e;
+}
+
+.formulaire-de-login a {
+  display: block;
+  margin-top: 20px;
+  text-align: center;
+  text-decoration: underline;
+  color: #3d3d3d;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+footer nav ul {
+	display: flex;
+	justify-content: flex-end;
+	margin: 2em
+}
