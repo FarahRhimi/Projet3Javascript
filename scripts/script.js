@@ -207,8 +207,8 @@ function setupAddPhotoForm() {
   function checkFormValidity() {
     if (
       fileInput.files.length > 0 &&
-      titleInput.value.trim() !== "" &&
-      categorySelect.value !== ""
+      titleInput.value.trim() != "" &&
+      categorySelect.value != 0
     ) {
       submitBtn.disabled = false;
       submitBtn.classList.add("active");
