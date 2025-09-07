@@ -77,6 +77,19 @@ main {
   cursor: pointer;
 }
 
+/* Cache l'erreur au départ */
+.hidden-error {
+  display: none;
+}
+
+/* Style général du message d’erreur */
+#error-message {
+  color: red;
+  font-size: 0.9rem;
+  margin: 10px 0;
+}
+
+
 footer nav ul {
 	display: flex;
 	justify-content: flex-end;
